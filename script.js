@@ -58,8 +58,10 @@ function calculateAll() {
     try {
         const expression = currentDisplay.value.replace('x', '*').replace('÷', '/')
 
-        if (operators.some(op => currentDisplay.value.endsWith(op))) {
-            return
+        if(operators.some(op => currentDisplay.value.startsWith(op))){
+            throw new Error('Missing values')
+        }else if (operators.some(op => currentDisplay.value.endsWith(op))) {
+            throw new Error('Missing values')
         } else if (expression.trim() === '') {
             return
         } else if (expression.includes('/0')) {
