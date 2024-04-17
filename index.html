@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Andreas Pinheiro">
+    <meta name="description" content="A simple calculator made with JavaScript">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JS Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div id="switch-theme-container">
+            <input type="checkbox" name="chk" id="chk">
+            <label for="chk">
+                <i class="bi bi-brightness-high"></i>
+                <i class="bi bi-moon-stars"></i>
+                <div class="ball"></div>
+            </label>
+        </div>
+        <div id="calculator">
+            <div class="display">
+                <input type="text" id="currentOperation" disabled>
+                <input type="text" id="previousOperation" disabled>
+            </div>
+            <div class="keypad">
+                <input type="button" value="AC" class="keypad-button">
+                <input type="button" value="DEL" class="keypad-button">
+                <input type="button" value="%" class="keypad-button">
+                <input type="button" value="÷" class="keypad-button">
+                <input type="button" value="7" class="keypad-button">
+                <input type="button" value="8" class="keypad-button">
+                <input type="button" value="9" class="keypad-button">
+                <input type="button" value="x" class="keypad-button">
+                <input type="button" value="4" class="keypad-button">
+                <input type="button" value="5" class="keypad-button">
+                <input type="button" value="6" class="keypad-button">
+                <input type="button" value="-" class="keypad-button">
+                <input type="button" value="1" class="keypad-button">
+                <input type="button" value="2" class="keypad-button">
+                <input type="button" value="3" class="keypad-button">
+                <input type="button" value="+" class="keypad-button">
+                <input type="button" value="0" class="keypad-button">
+                <input type="button" value="." class="keypad-button">
+                <input type="button" value="=" class="keypad-button">
+            </div>
+        </div>
+        <div id="history-container">
+            <div id="history-header">
+                <h2 id="history-title">History:</h2>
+                <button id="clearHistoryBtn">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
+            <ul id="history"></ul>
+        </div>
+    </div>
+</body>
+</html>

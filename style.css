@@ -1,0 +1,186 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: radial-gradient(circle at 10% 20%, rgba(239, 87, 87, 0.74) 0%, rgba(245, 123, 13, 0.74) 90.2%);
+}
+#calculator.dark, #history-container.dark, #switch-theme-container.dark{
+    background-color: #243441;
+}
+input.dark,
+#history-header.dark,
+#history-header.dark button,
+#currentOperation.dark,
+#previousOperation.dark,
+#switch-theme-container.dark,
+#history.dark{
+    color: white;
+}
+.container{
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#calculator{
+    width: 20rem;
+    background-color: white;
+    border-radius: 2rem;
+    z-index: 0;
+    -webkit-box-shadow: 0px 2px 5px 4px rgba(0,0,0,0.19);
+    -moz-box-shadow: 0px 2px 5px 4px rgba(0,0,0,0.19);
+    box-shadow: 0px 2px 5px 4px rgba(0,0,0,0.19);
+}
+.display input{
+    width: 100%;
+    padding: 2rem 2.4rem 0 2rem;
+    text-align: right;
+    text-transform: lowercase;
+    background-color: transparent;
+    border: none;
+}
+#currentOperation{
+    font-size: 3rem;
+    margin-top: 2rem;
+}
+#previousOperation{
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+.keypad{
+    display: grid;
+    gap: 0.7rem;
+    padding: 2rem 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 4rem 4rem 4rem 4rem 4rem;
+}
+.keypad input{
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: transparent;
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.19);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.19);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.19);
+}
+.highlited-text{
+    color: orange;
+}
+.keypad input:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.116);
+}
+.keypad input[value="="]{
+    color: white;
+    background-color: orange;
+    font-weight: 900;
+    grid-column: span 2;
+}
+.keypad input[value="="]:hover{
+    background-color: rgba(255, 166, 0, 0.788);
+}
+#history-container{
+    overflow-y: auto;
+    width: 12rem;
+    max-width: 12rem;
+    background-color: white;
+    height: 30rem;
+    max-height: 30rem;
+    padding: 1rem 1rem 0 1rem;
+    border-radius: 0 0.3rem 0.3rem 0;
+}
+#history-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+}
+#history-title{
+    font-size: 1.3rem;
+}
+#clearHistoryBtn{
+    font-size: 1rem;
+    padding: 0.3rem;
+    border: none;
+    background-color: transparent;
+}
+#clearHistoryBtn:hover{
+    cursor: pointer;
+    transform: scale(1.3);
+}
+#history li{
+    list-style: none;
+    margin: 1.1rem 0;
+}
+#switch-theme-container{
+    font-size: 1.5rem;
+    color: black;
+    padding: 0.6rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+    background-color: white;
+}
+#switch-theme-container label{
+    height: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+#switch-theme-container #chk{
+    opacity: 0;
+    position: absolute;
+}
+#switch-theme-container .ball{
+    position: absolute;
+    margin-top: -0.2rem;
+    background-color: rgba(0, 0, 0, 0.418);
+    height: 2.1rem;
+    width: 2.1rem;
+    border-radius: 1.2rem;
+    transform: translate(0);
+    transition: transform 0.2s linear;
+}
+#chk:checked + label .ball{
+    transform: translateY(2.2rem);
+}
+
+
+@media screen and (max-width: 750px) {
+    .container{
+        flex-direction: column;
+        margin: 2rem auto;
+    }
+    #switch-theme-container{
+        border-radius: 0.8rem 0.8rem 0 0;
+    }
+    #switch-theme-container label{
+        flex-direction: row;
+        width: 5rem;
+        height: 2rem;
+    }
+    #switch-theme-container .ball{
+        margin-left: -0.25rem;
+    }
+    #chk:checked + label .ball{
+        transform: translateX(3.43rem);
+    }
+    #history-container{
+        width: 16.5rem;
+        max-width: 16.5rem;
+        border-radius: 0 0 1rem 1rem;
+        height: 10rem;
+        max-height: 10rem;
+    }
+    #history-header{
+        margin-bottom: 1.8rem;
+    }
+    #history li{
+        list-style: none;
+        margin: 0.8rem 0;
+    }
+}
