@@ -66,7 +66,11 @@ function calculateAll() {
         } else if (expression.includes('/0')) {
             throw new Error('Division by zero')
         } else {
-            const result = eval(expression)
+            let result = eval(expression)
+            if (result.toString().includes('.')) {
+                let parts = result.toString().split('.');
+                result = parts[0] + '.' + parts[1].slice(0, 4);
+            }
             addToHistory(currentDisplay.value, result) // Add the operation to the history
             previousDisplay.value = `${currentDisplay.value} = ${result}`
             currentDisplay.value = result
@@ -85,7 +89,7 @@ function clearHistory() {
 // Add the operation to the history
 function addToHistory(operation, result) {
     const newHistoryItem = document.createElement('li')
-    newHistoryItem.innerText = `${operation} = ${result}`
+    newHistoryItem.innerHTML = `${operation} <strong>=</strong> ${result}`
     history.appendChild(newHistoryItem)
 }
 
