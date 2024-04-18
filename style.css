@@ -169,7 +169,8 @@ input.dark,
 
 @media screen and (max-width: 750px) {
     .container{
-        margin: auto;
+        height: 95vh;
+        margin: 0.2rem auto;
         flex-direction: column;
     }
     #switch-theme-container{
