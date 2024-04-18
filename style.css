@@ -35,7 +35,7 @@ input.dark,
 }
 .container{
     margin: auto;
-    height: 90vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,7 +170,7 @@ input.dark,
 @media screen and (max-width: 750px) {
     .container{
         flex-direction: column;
-        margin: 0.5rem auto;
+        margin: 0 auto;
     }
     #switch-theme-container{
         border-radius: 0.8rem 0.8rem 0 0;
