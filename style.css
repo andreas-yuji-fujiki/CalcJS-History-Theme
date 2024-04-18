@@ -106,6 +106,7 @@ input.dark,
     max-height: 30rem;
     padding: 1rem 1rem 0 1rem;
     border-radius: 0 0.3rem 0.3rem 0;
+    line-break: auto;
 }
 #history-header{
     display: flex;
@@ -197,6 +198,6 @@ input.dark,
     }
     #history li{
         list-style: none;
-        margin: 0.8rem 0;
+        margin: 1rem 0;
     }
 }
