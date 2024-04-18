@@ -170,7 +170,7 @@ input.dark,
 @media screen and (max-width: 750px) {
     .container{
         flex-direction: column;
-        margin: 0.5rem auto;
+        margin: 2rem auto;
     }
     #switch-theme-container{
         border-radius: 0.8rem 0.8rem 0 0;
