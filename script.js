@@ -58,11 +58,10 @@ function calculateAll() {
     try {
         const expression = currentDisplay.value.replace('x', '*').replace('÷', '/')
 
-        if(operators.some(op => currentDisplay.value.startsWith(op))){
+        if(operators.some(op => currentDisplay.value.startsWith(op)) || 
+        operators.some(op => currentDisplay.value.endsWith(op))){
             throw new Error('Missing values')
-        }else if (operators.some(op => currentDisplay.value.endsWith(op))) {
-            throw new Error('Missing values')
-        } else if (expression.trim() === '') {
+        } else if (expression.trim() === '' || !operators.some(op => currentDisplay.value.includes(op)))  {
             return
         } else if (expression.includes('/0')) {
             throw new Error('Division by zero')
@@ -86,7 +85,7 @@ function clearHistory() {
 // Add the operation to the history
 function addToHistory(operation, result) {
     const newHistoryItem = document.createElement('li')
-    newHistoryItem.innerHTML = `<strong>${operation}</strong> = ${result}`
+    newHistoryItem.innerText = `${operation} = ${result}`
     history.appendChild(newHistoryItem)
 }
 
