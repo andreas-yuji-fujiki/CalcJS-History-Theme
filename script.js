@@ -1,123 +1,117 @@
-// Display elements:
-const currentDisplay = document.getElementById('currentOperation') // Element for displaying the current operation
-const previousDisplay = document.getElementById('previousOperation') // Element for displaying the previous operation
-const operators = ['%', '/', 'x', '-', '+', '.', '÷', 'AC', 'DEL'] // Supported operators list
+// Display elements
+const currentOperation = document.getElementById('currentOperation')
+const previousOperation = document.getElementById('previousOperation')
+// Keypad button elements
+const numberButtons = document.querySelectorAll('[data-number]')
+const operationButtons = document.querySelectorAll('[data-operation')
+const clearButton = document.querySelector('[data-clear]')
+const deleteButton = document.querySelector('[data-delete]')
+const equalsButton = document.querySelector('[data-equals]')
+// Operators list
+const operators = ['%', '÷', '/', 'x', '*', '-', '+', '.']
+// History elements
+const clearHistoryButton = document.getElementById('clearHistoryBtn')
+const historyList = document.getElementById('history')
+// Theme switch elements
+const switchThemeInput = document.getElementById('chk')
 
-const history = document.getElementById('history') // Element for displaying the history of operations
-const clearHistoryBtn = document.getElementById('clearHistoryBtn') // Button for clearing the history
-clearHistoryBtn.addEventListener('click', clearHistory) // Add an event listener to clear the history
 
-const themeButton = document.getElementById('chk')
-themeButton.addEventListener('change', switchTheme)
 
-// Add event listeners to the keypad buttons
-const keypadButtons = document.getElementsByClassName('keypad-button')
-for (i in keypadButtons) {
-    keypadButtons[i].addEventListener('click', verifyButton)
-}
 
-// Verify the clicked button and perform the corresponding action
-function verifyButton(event) {
-    const buttonValue = event.target.value
-    const displayEndsWithOperator = operators.some(op => currentDisplay.value.endsWith(op))
-    const buttonIsOperator = operators.some(op => buttonValue.includes(op))
+// Append numbers to display
+numberButtons.forEach(numberBtn => {
+    numberBtn.addEventListener('click', () => {
+        currentOperation.value += numberBtn.value
+    })
+})
 
-    if (buttonIsOperator && displayEndsWithOperator) {
-        return
-    } else {
-        switch (buttonValue) {
-            case 'AC':
-                allClear()
-                break
-            case 'DEL':
-                deleteValue()
-                break
-            case '=':
-                calculateAll()
-                break
-            default:
-                currentDisplay.value += buttonValue
-                break
-        }
-    }
-}
-
-// Clear the display fields
-function allClear() {
-    currentDisplay.value = ''
-    previousDisplay.value = ''
-}
-
-// Delete the last character in the current display field
-function deleteValue() {
-    currentDisplay.value = currentDisplay.value.slice(0, -1)
-}
-
-// Calculate the mathematical expression and display the result
-function calculateAll() {
-    try {
-        const expression = currentDisplay.value.replace('x', '*').replace('÷', '/')
-
-        if(operators.some(op => currentDisplay.value.startsWith(op)) || 
-        operators.some(op => currentDisplay.value.endsWith(op))){
-            throw new Error('Missing values')
-        } else if (expression.trim() === '' || !operators.some(op => currentDisplay.value.includes(op)))  {
+// Apend operator to display
+operationButtons.forEach(operationBtn => {
+    operationBtn.addEventListener('click', () => {
+        if(operators.some(op => currentOperation.value.endsWith(op))){
             return
-        } else if (expression.includes('/0')) {
-            throw new Error('Division by zero')
-        } else {
-            let result = eval(expression)
-            if (result.toString().includes('.')) {
-                let parts = result.toString().split('.');
-                result = parts[0] + '.' + parts[1].slice(0, 4);
-            }
-            addToHistory(currentDisplay.value, result) // Add the operation to the history
-            previousDisplay.value = `${currentDisplay.value} = ${result}`
-            currentDisplay.value = result
-        }
-    } catch (error) {
-        allClear()
-        previousDisplay.value = `ERROR: ${error.message}!`
-    }
-}
-
-// Clear the history of operations
-function clearHistory() {
-    history.innerHTML = ''
-}
-
-// Add the operation to the history
-function addToHistory(operation, result) {
-    const newHistoryItem = document.createElement('li')
-    newHistoryItem.innerHTML = `${operation} <strong>=</strong> ${result}`
-    history.appendChild(newHistoryItem)
-}
-
-function switchTheme() {
-    document.getElementById('calculator').classList.toggle('dark')
-    document.getElementById('history-container').classList.toggle('dark')
-    document.getElementById('switch-theme-container').classList.toggle('dark')
-    document.getElementById('history-header').classList.toggle('dark')
-    currentDisplay.classList.toggle('dark')
-    previousDisplay.classList.toggle('dark')
-    history.classList.toggle('dark')
-
-
-    // Convert the keypad buttons collection into an array
-    const keypadArray = Array.from(keypadButtons)
-
-    // Iterate through each keypad button
-    keypadArray.forEach(button => {
-        const buttonValue = button.value
-        const isOperator = operators.some(op => buttonValue.includes(op))
-        
-        // Toggle the class based on whether the button is an operator or not
-        if (isOperator) {
-            button.classList.toggle('highlited-text')
-        }
-
-        if(!isOperator){
-            button.classList.toggle('dark')
+        }else{
+            currentOperation.value += operationBtn.value
         }
     })
+})
+
+// Clear all display values
+clearButton.addEventListener('click', allClear)
+function allClear(){
+    currentOperation.value = ''
+    previousOperation.value = ''
 }
+
+// Delete a char
+deleteButton.addEventListener('click', () => {
+    currentOperation.value = currentOperation.value.toString().slice(0, -1)
+})
+
+// Calculate
+equalsButton.addEventListener('click', () => {
+    const noOperatorInDisplay = !operators.some(op => currentOperation.value.includes(op))
+    const displayStartsWithOperator = operators.some(op => currentOperation.value.startsWith(op))
+    const displayEndsWithOperator = operators.some(op => currentOperation.value.endsWith(op))
+
+    try{
+        if(displayStartsWithOperator || displayEndsWithOperator ){
+            throw new Error('missing values')
+        }else if(noOperatorInDisplay){
+            return
+        }else if(currentOperation.value.includes('÷0')){
+            throw new Error('division by zero')
+        }else{
+            updateHistory()
+            updateDisplay()
+        }
+    }catch (error){
+        allClear()
+        previousOperation.value = `ERROR: ${error.message}!`
+    }
+})
+
+// Update display
+function updateDisplay(){
+    const expression = currentOperation.value
+    const result = eval(expression.replace('÷', '/').replace('x', '*'))
+
+    previousOperation.value = `${expression} = ${result}`
+    currentOperation.value = result
+}
+
+// Update history
+function updateHistory(){
+    const expression = currentOperation.value
+    const result = eval(expression.replace('÷', '/').replace('x', '*'))
+    
+    const newHistoryElement = document.createElement('li')
+    newHistoryElement.innerHTML = `${expression} <strong>=</strong> ${result}`
+    historyList.appendChild(newHistoryElement)
+}
+
+// Clear history
+clearHistoryButton.addEventListener('click', () => {
+    historyList.innerHTML = ''
+})
+
+// Switch theme
+switchThemeInput.addEventListener('change', () => {
+    const calculator = document.getElementById('calculator')
+    const historyContainer = document.getElementById('history-container')
+    const switchThemeContainer = document.getElementById('switch-theme-container')
+    const historyHeader = document.getElementById('history-header')
+    const history = document.getElementById('history')
+
+    currentOperation.classList.toggle('dark')
+    previousOperation.classList.toggle('dark')
+    calculator.classList.toggle('dark')
+    historyContainer.classList.toggle('dark')
+    switchThemeContainer.classList.toggle('dark')
+    historyHeader.classList.toggle('dark')
+    history.classList.toggle('dark')
+    clearButton.classList.toggle('highlited-text')
+    deleteButton.classList.toggle('highlited-text')
+    numberButtons.forEach(numberBtn => numberBtn.classList.toggle('dark'))
+    operationButtons.forEach(operationBtn => operationBtn.classList.toggle('highlited-text'))
+});
