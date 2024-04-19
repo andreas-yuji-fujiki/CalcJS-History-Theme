@@ -6,6 +6,9 @@
 body{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     background: radial-gradient(circle at 10% 20%, rgba(239, 87, 87, 0.74) 0%, rgba(245, 123, 13, 0.74) 90.2%);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     scrollbar-width: thin;
 }
 *::-webkit-scrollbar{
