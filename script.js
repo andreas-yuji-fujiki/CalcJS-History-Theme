@@ -52,12 +52,13 @@ deleteButton.addEventListener('click', () => {
 equalsButton.addEventListener('click', () => {
     const noOperatorInDisplay = !operators.some(op => currentOperation.value.includes(op))
     const displayStartsWithOperator = operators.some(op => currentOperation.value.startsWith(op))
+    const startsWithLessOperator = currentOperation.value.startsWith('-')
     const displayEndsWithOperator = operators.some(op => currentOperation.value.endsWith(op))
 
     try{
-        if(displayStartsWithOperator || displayEndsWithOperator ){
+        if(displayStartsWithOperator && !startsWithLessOperator || displayEndsWithOperator){
             throw new Error('missing values')
-        }else if(noOperatorInDisplay){
+        }else if(noOperatorInDisplay || startsWithLessOperator && !operators.some(op => op !== '-' && currentOperation.value.includes(op))){
             return
         }else if(currentOperation.value.includes('÷0')){
             throw new Error('division by zero')
@@ -67,7 +68,7 @@ equalsButton.addEventListener('click', () => {
         }
     }catch (error){
         allClear()
-        previousOperation.value = `ERROR: ${error.message}!`
+        previousOperation.value = `error: ${error.message}!`
     }
 })
 
@@ -114,4 +115,4 @@ switchThemeInput.addEventListener('change', () => {
     deleteButton.classList.toggle('highlited-text')
     numberButtons.forEach(numberBtn => numberBtn.classList.toggle('dark'))
     operationButtons.forEach(operationBtn => operationBtn.classList.toggle('highlited-text'))
-});
+})
