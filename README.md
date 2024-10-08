@@ -19,5 +19,6 @@ A JavaScript calculator with operation history and theme switcher.
 2. Perform calculations and view the history of operations.
 3. Switch between light and dark themes with the theme switcher.
 
+### By: [Andreas Yuji](https://andreas-yuji-fujiki.github.io/portfolio)
 ### License:
 This project is licensed under the [MIT License](LICENSE).
