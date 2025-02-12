@@ -1,6 +1,6 @@
 ## CalcJS-History-Theme
 
-# [deploy link](https://andreas-yuji-fujiki.github.io/CalcJS-History-Theme/)
+# [> deploy link](https://andreas-yuji-fujiki.github.io/CalcJS-History-Theme/)
 
 A JavaScript calculator with operation history and theme switcher.
 
